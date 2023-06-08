@@ -14,7 +14,7 @@ exports.registerUser = async (req, res) => {
 
   const bcryptedPassword = await bcrypt.hash("password", 12);
 
-  await new User({
+  const user = await new User({
     first_name,
     last_Name,
     email,
@@ -27,6 +27,19 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email: email.toLowerCase() });
+
+  const matchPassword = await bcrypt.compare("password", user.password);
+  console.log(matchPassword);
+
+  if (!matchPassword) {
+    return res.status(404).json({
+      message: "Invalid Credentials",
+    });
+  }
+
   res.send({
     message: "Login Sucess",
   });
