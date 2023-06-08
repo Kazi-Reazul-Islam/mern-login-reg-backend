@@ -25,3 +25,9 @@ exports.registerUser = async (req, res) => {
     message: "Register Success",
   });
 };
+
+exports.loginUser = async (req, res) => {
+  res.send({
+    message: "Login Sucess",
+  });
+};
