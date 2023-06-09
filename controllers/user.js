@@ -12,7 +12,7 @@ exports.registerUser = async (req, res) => {
     });
   }
 
-  const bcryptedPassword = await bcrypt.hash("password", 12);
+  const bcryptedPassword = await bcrypt.hash(password, 12);
 
   const user = await new User({
     first_name,
@@ -31,7 +31,7 @@ exports.loginUser = async (req, res) => {
 
   const user = await User.findOne({ email: email.toLowerCase() });
 
-  const matchPassword = await bcrypt.compare("password", user.password);
+  const matchPassword = await bcrypt.compare(password, user.password);
   console.log(matchPassword);
 
   if (!matchPassword) {
